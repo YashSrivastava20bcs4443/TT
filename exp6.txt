@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Function to check if a roll number is present in all three lists
+bool isRollNumberPresent(const vector<pair<int, string>>& list1,
+                         const vector<pair<int, string>>& list2,
+                         const vector<pair<int, float>>& list3,
+                         int targetRollNo) {
+    int size1 = list1.size();
+    int size2 = list2.size();
+    int size3 = list3.size();
+
+    int index1 = 0, index2 = 0, index3 = 0;
+
+    while (index1 < size1 && index2 < size2 && index3 < size3) {
+        int rollNo1 = list1[index1].first;
+        int rollNo2 = list2[index2].first;
+        int rollNo3 = list3[index3].first;
+
+        if (rollNo1 == targetRollNo && rollNo2 == targetRollNo && rollNo3 == targetRollNo)
+            return true;
+
+        if (rollNo1 <= rollNo2 && rollNo1 <= rollNo3)
+            index1++;
+        else if (rollNo2 <= rollNo1 && rollNo2 <= rollNo3)
+            index2++;
+        else if (rollNo3 <= rollNo1 && rollNo3 <= rollNo2)
+            index3++;
+    }
+
+    return false;
+}
+
+int main() {
+    // Sample data for the three lists
+    vector<pair<int, string>> list1 = { {101, "John"}, {201, "Alice"}, {301, "Mike"} };
+    vector<pair<int, string>> list2 = { {101, "BCA"}, {201, "MBA"}, {301, "B.Tech"} };
+    vector<pair<int, float>> list3 = { {101, 8.5}, {201, 9.2}, {301, 7.8} };
+

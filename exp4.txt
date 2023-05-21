@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+
+using namespace std;
+
+// Function to calculate the hash value of a string
+int calculateHash(const string& str, int num) {
+    int hashValue = 0;
+    int k = str.length() - 1;
+
+    for (int i = 0; i < str.length(); i++) {
+        hashValue += str[i] * pow(num, k--);
+    }
+
+    return hashValue;
+}
+
+// Function to find a particular substring in the given text editor
+void findSubstring(const string& text, const string& pattern, int num) {
+    int patternHash = calculateHash(pattern, num);
+
+    for (int i = 0; i <= text.length() - pattern.length(); i++) {
+        string substring = text.substr(i, pattern.length());
+        int substringHash = calculateHash(substring, num);
+
+        if (substringHash == patternHash) {
+            cout << "found" << endl;
+            return;
+        }
+    }
+
+    cout << "not found" << endl;
+}
+
+int main() {
+    string text = "CABDCAC";
+    string pattern = "Exp 4 Grpup A";
+    int num = 2;
+
+    findSubstring(text, pattern, num);
+
+    return 0;
+}

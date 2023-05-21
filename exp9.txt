@@ -1,0 +1,83 @@
+#include <iostream>
+
+using namespace std;
+
+// Node class to represent a node in the linked list
+class Node {
+public:
+    int marks;
+    Node* next;
+
+    Node(int marks) {
+        this->marks = marks;
+        next = nullptr;
+    }
+};
+
+// Function to insert a node at the beginning of the linked list
+void insertNode(Node*& head, int marks) {
+    Node* newNode = new Node(marks);
+    newNode->next = head;
+    head = newNode;
+}
+
+// Function to print the linked list
+void printList(Node* head) {
+    Node* current = head;
+    while (current != nullptr) {
+        cout << current->marks << " ";
+        current = current->next;
+    }
+    cout << endl;
+}
+
+// Function to sort the linked list using Bubble Sort
+void bubbleSort(Node* head) {
+    if (head == nullptr || head->next == nullptr)
+        return;
+
+    bool swapped;
+    Node* current;
+    Node* lastSorted = nullptr;
+
+    do {
+        swapped = false;
+        current = head;
+
+        while (current->next != lastSorted) {
+            if (current->marks > current->next->marks) {
+                // Swap adjacent nodes
+                int temp = current->marks;
+                current->marks = current->next->marks;
+                current->next->marks = temp;
+
+                swapped = true;
+            }
+
+            current = current->next;
+        }
+
+        lastSorted = current;
+    } while (swapped);
+}
+
+int main() {
+    // Create a linked list with sample marks
+    Node* head = nullptr;
+    insertNode(head, 75);
+    insertNode(head, 90);
+    insertNode(head, 60);
+    insertNode(head, 85);
+    insertNode(head, 70);
+
+    cout << "Original List: ";
+    printList(head);
+
+    // Sort the linked list using Bubble Sort
+    bubbleSort(head);
+
+    cout << "Sorted List: ";
+    printList(head);
+
+    return 0;
+}

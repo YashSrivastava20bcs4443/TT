@@ -1,0 +1,28 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// Function to check if a character is present in a list
+bool isCharacterPresent(const vector<char>& charList, char targetChar) {
+    for (char c : charList) {
+        if (c == targetChar)
+            return true;
+    }
+
+    return false;
+}
+
+int main() {
+    vector<char> charList = { 'a', 'b', 'c', 'd', 'e' };
+    char targetChar = 'c';
+
+    bool isPresent = isCharacterPresent(charList, targetChar);
+
+    if (isPresent)
+        cout << "The character " << targetChar << " is present in the list." << endl;
+    else
+        cout << "The character " << targetChar << " is not present in the list." << endl;
+
+    return 0;
+}

@@ -1,0 +1,113 @@
+#include <iostream>
+
+using namespace std;
+
+// Node structure for linked list
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Linked list class
+class LinkedList {
+private:
+    Node* head;
+
+public:
+    // Constructor
+    LinkedList() {
+        head = nullptr;
+    }
+
+    // Function to add a new value at a given position
+    void addValue(int value, int position) {
+        Node* newNode = new Node();
+        newNode->data = value;
+
+        if (position == 1) {
+            newNode->next = head;
+            head = newNode;
+        } else {
+            Node* temp = head;
+            for (int i = 1; i < position - 1 && temp != nullptr; i++) {
+                temp = temp->next;
+            }
+
+            if (temp == nullptr) {
+                cout << "Invalid position." << endl;
+                return;
+            }
+
+            newNode->next = temp->next;
+            temp->next = newNode;
+        }
+    }
+
+    // Function to print all the values in the list
+    void printList() {
+        Node* temp = head;
+        while (temp != nullptr) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+
+    // Function to delete a value from a specific location
+    void deleteValue(int position) {
+        if (head == nullptr) {
+            cout << "List is empty." << endl;
+            return;
+        }
+
+        Node* temp = head;
+
+        if (position == 1) {
+            head = temp->next;
+            delete temp;
+        } else {
+            Node* prev = nullptr;
+            for (int i = 1; i < position && temp != nullptr; i++) {
+                prev = temp;
+                temp = temp->next;
+            }
+
+            if (temp == nullptr) {
+                cout << "Invalid position." << endl;
+                return;
+            }
+
+            prev->next = temp->next;
+            delete temp;
+        }
+    }
+};
+
+int main() {
+    LinkedList myList;
+
+    // Adding values to the list
+    myList.addValue(10, 1);
+    myList.addValue(20, 2);
+    myList.addValue(30, 3);
+
+    // Printing the list
+    cout << "List: ";
+    myList.printList();
+
+    // Adding a value at a given position
+    myList.addValue(25, 2);
+
+    // Printing the list
+    cout << "List after adding value: ";
+    myList.printList();
+
+    // Deleting a value from a given position
+    myList.deleteValue(3);
+
+    // Printing the list
+    cout << "List after deleting value: ";
+    myList.printList();
+
+    return 0;
+}

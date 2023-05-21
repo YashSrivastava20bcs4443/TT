@@ -1,0 +1,71 @@
+#include <iostream>
+#include <unordered_map>
+
+using namespace std;
+
+// TrieNode class
+class TrieNode {
+public:
+    bool isEndOfWord;
+    unordered_map<char, TrieNode*> children;
+
+    TrieNode() {
+        isEndOfWord = false;
+    }
+};
+
+// Trie class
+class Trie {
+private:
+    TrieNode* root;
+
+public:
+    Trie() {
+        root = new TrieNode();
+    }
+
+    // Function to insert a string into the trie
+    void insert(const string& word) {
+        TrieNode* current = root;
+
+        for (char c : word) {
+            if (current->children.find(c) == current->children.end())
+                current->children[c] = new TrieNode();
+
+            current = current->children[c];
+        }
+
+        current->isEndOfWord = true;
+    }
+
+    // Function to search for a string in the trie
+    bool search(const string& word) {
+        TrieNode* current = root;
+
+        for (char c : word) {
+            if (current->children.find(c) == current->children.end())
+                return false;
+
+            current = current->children[c];
+        }
+
+        return current != nullptr && current->isEndOfWord;
+    }
+};
+
+int main() {
+    Trie trie;
+
+    // Insert strings into the trie
+    trie.insert("apple");
+    trie.insert("banana");
+    trie.insert("orange");
+    trie.insert("grape");
+
+    // Search for strings in the trie
+    cout << "Searching 'apple': " << (trie.search("apple") ? "Found" : "Not Found") << endl;
+    cout << "Searching 'banana': " << (trie.search("banana") ? "Found" : "Not Found") << endl;
+    cout << "Searching 'cherry': " << (trie.search("cherry") ? "Found" : "Not Found") << endl;
+
+    return 0;
+}
